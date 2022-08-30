@@ -27,15 +27,6 @@ steps:
     ls
   displayName: 'Check directory'
 
-- task: ArchiveFiles@2
-  displayName: 'Compress files'
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/build'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
   inputs:
