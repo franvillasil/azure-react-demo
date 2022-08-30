@@ -17,12 +17,24 @@ steps:
 
 - script: |
     npm install
+  displayName: 'NPM install'
+
+- script: |
     npm run build
-  displayName: 'NPM install and build'
+  displayName: 'NPM build'
 
 - script: |
     ls
   displayName: 'Check directory'
+
+- task: ArchiveFiles@2
+  displayName: 'Compress files'
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/build'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
@@ -30,12 +42,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Testlab'
-    appType: 'webAppLinux'
-    WebAppName: 'fv-azure-react-demo'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'NODE|18-lts'
