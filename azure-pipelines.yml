@@ -24,18 +24,18 @@ steps:
     ls
   displayName: 'Check directory'
 
-- task: ArchiveFiles@2
-  displayName: 'Archives Files'
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/public'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Testlab'
+    appType: 'webAppLinux'
+    WebAppName: 'fv-azure-react-demo'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'NODE|18-lts'
