@@ -28,7 +28,7 @@ steps:
   displayName: 'Archives Files'
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)/public'
-    includeRootFolder: false
+    includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
