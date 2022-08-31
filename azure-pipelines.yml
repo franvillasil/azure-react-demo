@@ -31,7 +31,7 @@ steps:
   displayName: 'Compress files'
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)/build'
-    includeRootFolder: false
+    includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
